@@ -44,24 +44,32 @@ class BookListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //Calling service to get the list of books
+        //Preparing service to get the list of books
         val service = BookListService
+
+        //Show the progress dialog to begin the service call
         dialog?.setTitle("Loading...")
         dialog?.show()
-        //Calling the service factory and observeon it
+
+        //Calling the service factory to get the book list and observes for result to come back
         service.create().getBookList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(
-                        { result -> showResult(result)},
-                        { error -> error.printStackTrace()}
+                        { result -> showResult(result)}, //Success, show the result
+                        { error -> error.printStackTrace()} //Failure, print the error for now
                 )
 
     }
 
+    /**
+     * Assigns the result to adaptor to show the list
+     */
     private fun showResult(result: List<Book>?) {
+        //Dismiss the dialog to end the service call
         dialog?.dismiss()
         bookList = result!!
+        //Once result retrieved, is assigned to adaptor to show.
         val listAdapter = BookListAdapter(activity, bookList)
 
         recyclerView?.adapter = listAdapter

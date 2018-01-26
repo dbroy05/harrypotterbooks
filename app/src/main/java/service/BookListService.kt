@@ -15,7 +15,7 @@ interface BookListService {
     @GET("/books.json")
     fun getBookList() : Observable<List<Book>>
 
-    //This factory class
+    //This factory class builds the service with other factories
     companion object Factory {
         private val SERVER_URL = "http://de-coding-test.s3.amazonaws.com"
 

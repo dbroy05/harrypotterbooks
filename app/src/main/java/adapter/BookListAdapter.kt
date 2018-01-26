@@ -18,20 +18,33 @@ import model.Book
  */
 
 class BookListAdapter(private val mContext: Context, private val mBookList: List<Book>) : RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
+
+    /**
+     * Initializes the ViewHolder to hold the each row of the list
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookListAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.book_list_item, parent, false)
         return ViewHolder(view)
     }
 
+    /**
+     * Binds the holder for each row the list
+     */
     override fun onBindViewHolder(holder: BookListAdapter.ViewHolder, position: Int) {
         val book = mBookList[position]
         holder.bindItem(book)
     }
 
+    /**
+     * Returns number of rows in list
+     */
     override fun getItemCount(): Int {
         return mBookList.size
     }
 
+    /**
+     * Main ViewHolder class the hold the value of each row in list
+     */
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var description: TextView
